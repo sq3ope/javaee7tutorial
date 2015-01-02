@@ -7,10 +7,15 @@
  */
 package firstcup.ejb;
 
+import firstcup.entity.FirstcupUser;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -27,10 +32,38 @@ public class DukesBirthdayBean {
     private EntityManager em;
 
     public Double getAverageAgeDifference() {
-        // Insert code here
+        Double avgAgeDiff = (Double)
+                em.createNamedQuery("findAverageAgeDifferenceOfAllFirstcupUsers")
+                        .getSingleResult();
+        logger.log(Level.INFO, "Average age difference is: {0}", avgAgeDiff);
+        return avgAgeDiff;
     }
 
     public int getAgeDifference(Date date) {
-        // Insert code here
+        int ageDifference;
+
+        Calendar theirBirthday = new GregorianCalendar();
+        Calendar dukesBirthday = new GregorianCalendar(1995, Calendar.MAY, 23);
+
+        // Set the Calendar object to the passed-in Date
+        theirBirthday.setTime(date);
+
+        // Subtract the user's age from Duke's age
+        ageDifference = dukesBirthday.get(Calendar.YEAR)
+                - theirBirthday.get(Calendar.YEAR);
+        logger.log(Level.INFO, "Raw ageDifference is: {0}", ageDifference);
+        // Check to see if Duke's birthday occurs before the user's. If so,
+        // subtract one from the age difference
+        if (dukesBirthday.before(theirBirthday) && (ageDifference > 0)) {
+            ageDifference--;
+        }
+
+        // Create and store the user's birthday in the database
+        FirstcupUser user = new FirstcupUser(date, ageDifference);
+        em.persist(user);
+
+        logger.log(Level.INFO, "Final ageDifference is: {0}", ageDifference);
+
+        return ageDifference;
     }
 }

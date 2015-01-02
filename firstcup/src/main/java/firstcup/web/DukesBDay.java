@@ -13,8 +13,13 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.validation.constraints.NotNull;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Named
@@ -39,7 +44,13 @@ public class DukesBDay implements Serializable {
     }
 
     public String processBirthday() {
-        // Insert code here
+        this.setAgeDiff(dukesBirthdayBean.getAgeDifference(yourBD));
+        logger.log(Level.INFO, "age diff from dukesbday {0}", ageDiff);
+        this.setAbsAgeDiff(Math.abs(this.getAgeDiff()));
+        logger.log(Level.INFO, "absAgeDiff {0}", absAgeDiff);
+        this.setAverageAgeDifference(dukesBirthdayBean.getAverageAgeDifference());
+        logger.log(Level.INFO, "averageAgeDifference {0}", averageAgeDifference);
+        return "/response.xhtml";
     }
 
     /**
@@ -48,7 +59,17 @@ public class DukesBDay implements Serializable {
      * @return the value of age
      */
     public int getAge() {
-        // Insert code here
+        try {
+            Client client = ClientBuilder.newClient();
+            WebTarget target =
+                    client.target("http://localhost:8080/dukes-age/webapi/dukesAge");
+            String response = target.request().get(String.class);
+            age = Integer.parseInt(response);
+        } catch (IllegalArgumentException | NullPointerException |
+                WebApplicationException ex) {
+            logger.severe("processing of HTTP response failed");
+        }
+        return age;
     }
 
     /**
