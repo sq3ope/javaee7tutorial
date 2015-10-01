@@ -1,0 +1,7 @@
+To be ready for examples deployment you need a Glassfish installation.
+
+1. Install Glassfish by executing:
+./install_glassfish.sh
+
+2. Start Glassfish and Derby (Java DB) database:
+./start_glassfish_and_derby.sh
