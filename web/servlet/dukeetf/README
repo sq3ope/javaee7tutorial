@@ -1,0 +1,7 @@
+To run this example you need a running Glassfish. See README-glassfish for details.
+
+Having done that execute:
+./build_and_deploy.sh
+
+And go to URL:
+http://localhost:8080/dukeetf/
