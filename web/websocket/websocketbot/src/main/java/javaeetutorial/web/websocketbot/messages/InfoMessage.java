@@ -7,6 +7,11 @@
  */
 package javaeetutorial.web.websocketbot.messages;
 
+import javaeetutorial.web.websocketbot.BotBean;
+
+import javax.enterprise.concurrent.ManagedExecutorService;
+import javax.websocket.Session;
+
 /* Represents an information message, like
  * an user entering or leaving the chat */
 public class InfoMessage extends Message {
@@ -25,5 +30,10 @@ public class InfoMessage extends Message {
     @Override
     public String toString() {
         return "[InfoMessage] " + info;
+    }
+
+    @Override
+    public void process(Session session, ManagedExecutorService mes, BotBean botbean) {
+
     }
 }

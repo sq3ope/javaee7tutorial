@@ -7,6 +7,10 @@
  */
 package javaeetutorial.web.websocketbot.messages;
 
+import javaeetutorial.web.websocketbot.BotBean;
+
+import javax.enterprise.concurrent.ManagedExecutorService;
+import javax.websocket.Session;
 import java.util.List;
 
 /* Represents the list of users currently connected to the chat */
@@ -25,5 +29,10 @@ public class UsersMessage extends Message {
     @Override
     public String toString() {
         return "[UsersMessage] " + userlist.toString();
+    }
+
+    @Override
+    public void process(Session session, ManagedExecutorService mes, BotBean botbean) {
+
     }
 }

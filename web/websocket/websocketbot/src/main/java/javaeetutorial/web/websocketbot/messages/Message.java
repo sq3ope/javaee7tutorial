@@ -7,6 +7,13 @@
  */
 package javaeetutorial.web.websocketbot.messages;
 
-public class Message {
-    
+import javaeetutorial.web.websocketbot.BotBean;
+
+import javax.enterprise.concurrent.ManagedExecutorService;
+import javax.websocket.Session;
+
+public abstract class Message {
+
+    public abstract void process(Session session, ManagedExecutorService mes, BotBean botbean);
+
 }
