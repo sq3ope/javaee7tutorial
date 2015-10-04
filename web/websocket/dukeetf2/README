@@ -1,0 +1,8 @@
+To run this example standalone, execute:
+mvn clean verify -PrunStandalone
+
+If you already have a running Glassfish, use:
+mvn clean verify -PdeployToExistingContainer
+
+Now you can go to URL:
+http://localhost:8080/dukeetf2/
