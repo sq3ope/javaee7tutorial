@@ -1,0 +1,12 @@
+To run this example standalone, execute:
+mvn clean verify -PrunStandalone
+
+If you already have a running Glassfish, use:
+mvn clean verify -PdeployToExistingContainer
+
+To see WSDL go to URL:
+http://localhost:8080/helloservice-war/HelloService?wsdl
+To test service, go to:
+http://localhost:8080/helloservice-war/HelloService?Tester
+To test webservice client, visit:
+http://localhost:8080/hello-webclient/HelloServlet
