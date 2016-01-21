@@ -1,0 +1,20 @@
+To run this example standalone, execute:
+mvn clean verify -PrunStandalone
+
+If you already have a running Glassfish, use:
+mvn clean verify -PdeployToExistingContainer
+
+Then go to URL:
+http://localhost:8080/rsvp/index.xhtml
+
+To get all events by REST API:
+http://localhost:8080/rsvp/webapi/status/all
+
+Get single event:
+http://localhost:8080/rsvp/webapi/status/2
+
+Get as JSON:
+curl -H 'Accept: application/json' 'http://localhost:8080/rsvp/webapi/status/2'
+
+Change status:
+curl -H 'Content-type: application/json' -X POST -d 'Attending' 'http://localhost:8080/rsvp/webapi/2/4'
